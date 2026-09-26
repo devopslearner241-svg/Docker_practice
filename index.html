@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎬 CineMax · book your escape</title>
+  <!-- Google Fonts & Font Awesome for icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #0b0c10 0%, #1a1e28 100%);
+      font-family: 'Inter', sans-serif;
+      color: #f0f3f8;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* main card – glassmorphism + glow */
+    .booking-platform {
+      max-width: 1260px;
+      width: 100%;
+      background: rgba(18, 22, 33, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 3rem;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+    }
+
+    /* header area */
+    .header-section {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      gap: 1.5rem;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      background: #ff3b5c;
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 12px 20px -8px #ff3b5c;
+    }
+
+    .logo-text h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(to right, #ffffff, #e0c3fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-text span {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #8f9bb3;
+      letter-spacing: 0.4px;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.5rem 1.4rem 0.5rem 1rem;
+      border-radius: 60px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .user-profile i {
+      font-size: 1.2rem;
+      color: #b0b9d4;
+    }
+
+    .user-profile .avatar {
+      background: #2e3a4e;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #ffc857;
+      border: 2px solid #ffc85740;
+    }
+
+    /* movie cards grid */
+    .now-showing {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .now-showing h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .now-showing h2 i {
+      color: #ffc857;
+    }
+
+    .pill {
+      background: #ff3b5c10;
+      color: #ff7a92;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid #ff3b5c30;
+      letter-spacing: 0.3px;
+    }
+
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .movie-card {
+      background: #121826;
+      border-radius: 2rem;
+      padding: 1.8rem 1.5rem 1.5rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      box-shadow: 0 15px 25px -10px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .movie-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #ff3b5c, #ffb347, #4facfe);
+    }
+
+    .movie-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 30px 40px -15px #000000, 0 0 0 1px #ff3b5c30;
+    }
+
+    .movie-poster {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.2rem;
+    }
+
+    .poster-icon {
+      font-size: 3.5rem;
+      filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.6));
+      line-height: 1;
+    }
+
+    .rating {
+      background: #1e2537;
+      padding: 0.3rem 0.9rem;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #ffc857;
+      border: 1px solid #ffc85730;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .rating i {
+      font-size: 0.8rem;
+      color: #ffc857;
+    }
+
+    .movie-card h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .genre {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+
+    .genre span {
+      background: #1b2230;
+      padding: 0.25rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #a5b3d1;
+      border: 1px solid #2a3446;
+    }
+
+    .showtimes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .time-badge {
+      background: #1b2335;
+      border-radius: 40px;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #ced6e8;
+      border: 1px solid #2c374e;
+      transition: 0.15s;
+      cursor: default;
+    }
+
+    .time-badge i {
+      font-size: 0.7rem;
+      color: #ff3b5c;
+    }
+
+    .time-badge:hover {
+      background: #ff3b5c;
+      color: white;
+      border-color: #ff3b5c;
+    }
+
+    .time-badge:hover i {
+      color: white;
+    }
+
+    /* quick booking bar */
+    .booking-actions {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 3rem;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      margin-top: 1rem;
+    }
+
+    .selected-info {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .info-item i {
+      font-size: 1.3rem;
+      color: #ffc857;
+      width: 24px;
+      text-align: center;
+    }
+
+    .info-item div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .info-item .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #8c9bb5;
+      font-weight: 600;
+    }
+
+    .info-item .value {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .btn-primary {
+      background: #ff3b5c;
+      border: none;
+      border-radius: 60px;
+      padding: 1rem 2.8rem;
+      font-weight: 700;
+      font-size: 1rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.3px;
+      box-shadow: 0 12px 25px -8px #ff3b5c;
+      transition: all 0.2s;
+      cursor: default;
+      border: 1px solid #ff607c;
+    }
+
+    .btn-primary i {
+      font-size: 1rem;
+    }
+
+    .btn-primary:hover {
+      background: #ff284b;
+      transform: scale(1.02);
+      box-shadow: 0 18px 30px -8px #ff3b5c;
+    }
+
+    /* footer / extra info */
+    .footnote {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.8rem;
+      font-size: 0.8rem;
+      color: #6b7a97;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footnote i {
+      margin-right: 6px;
+      color: #ff3b5c;
+    }
+
+    /* responsive adjustments */
+    @media (max-width: 680px) {
+      body {
+        padding: 1rem;
+      }
+      .booking-platform {
+        padding: 1.8rem 1.2rem;
+        border-radius: 2rem;
+      }
+      .header-section {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .user-profile {
+        align-self: flex-end;
+      }
+      .booking-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .selected-info {
+        justify-content: space-between;
+      }
+      .btn-primary {
+        justify-content: center;
+      }
+      .logo-text h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="booking-platform">
+    <!-- header: logo + profile -->
+    <div class="header-section">
+      <div class="logo-area">
+        <div class="logo-icon">
+          <i class="fas fa-film"></i>
+        </div>
+        <div class="logo-text">
+          <h1>CineMax</h1>
+          <span>BOOK YOUR ESCAPE</span>
+        </div>
+      </div>
+      <div class="user-profile">
+        <i class="fas fa-map-pin"></i>
+        <span style="font-weight: 500;">Mumbai · 400001</span>
+        <div class="avatar">A</div>
+      </div>
+    </div>
+
+    <!-- now showing title + filter pill -->
+    <div class="now-showing">
+      <h2><i class="fas fa-fire"></i> Now Showing</h2>
+      <div class="pill"><i class="fas fa-star" style="color: #ffc857; margin-right: 5px;"></i> Trending</div>
+    </div>
+
+    <!-- movie cards grid -->
+    <div class="movie-grid">
+      <!-- movie 1: Dune -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <div class="poster-icon">🏜️</div>
+          <div class="rating"><i class="fas fa-star"></i> 8.8</div>
+        </div>
+        <h3>Dune: Part Two</h3>
+        <div class="genre">
+          <span>Sci-Fi</span>
+          <span>Adventure</span>
+          <span>IMAX</span>
+        </div>
+        <div class="showtimes">
+          <div class="time-badge"><i class="far fa-clock"></i> 10:30 AM</div>
+          <div class="time-badge"><i class="far fa-clock"></i> 2:15 PM</div>
+          <div class="time-badge"><i class="far fa-clock"></i> 6:45 PM</div>
+          <div class="time-badge"><i class="far fa-clock"></i> 10:00 PM</div>
+        </div>
+      </div>
+
+      <!-- movie 2: Oppenheimer -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <div class="poster-icon">⚛️</div>
+          <div class="rating"><i class="fas fa-star"></i> 8.6</div>
+        </div>
+        <h3>Oppenheimer</h3>
+        <div class="genre">
+          <span>Drama</span>
+          <span>History</span>
+          <span>IMAX</span>
+        </div>
+        <div class="showtimes">
+          <div class="time-badge"><i class="far fa-clock"></i> 11:00 AM</div>
+          <div class="time-badge"><i class="far fa-clock"></i> 3:30 PM</div>
+          <div class="time-badge"><i class="far fa-clock"></i> 8:00 PM</div>
+        </div>
+      </div>
+
+      <!-- movie 3: Poor Things -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <div class="poster-icon">🧠</div>
+          <div class="rating"><i class="fas fa-star"></i> 8.4</div>
+        </div>
+        <h3>Poor Things</h3>
+        <div class="genre">
+          <span>Comedy</span>
+          <span>Drama</span>
+          <span>Romance</span>
+        </div>
+        <div class="showtimes">
+          <div class="time-badge"><i class="far fa-clock"></i> 12:15 PM</div>
+          <div class="time-badge"><i class="far fa-clock"></i> 5:00 PM</div>
+          <div class="time-badge"><i class="far fa-clock"></i> 9:20 PM</div>
+        </div>
+      </div>
+
+      <!-- movie 4: Godzilla x Kong -->
+      <div class="movie-card">
+        <div class="movie-poster">
+          <div class="poster-icon">🦖</div>
+          <div class="rating"><i class="fas fa-star"></i> 7.9</div>
+        </div>
+        <h3>Godzilla x Kong</h3>
+        <div class="genre">
+          <span>Action</span>
+          <span>Adventure</span>
+          <span>3D</span>
+        </div>
+        <div class="showtimes">
+          <div class="time-badge"><i class="far fa-clock"></i> 9:45 AM</div>
+          <div class="time-badge"><i class="far fa-clock"></i> 1:30 PM</div>
+          <div class="time-badge"><i class="far fa-clock"></i> 7:15 PM</div>
+          <div class="time-badge"><i class="far fa-clock"></i> 11:00 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- quick booking / selected show summary -->
+    <div class="booking-actions">
+      <div class="selected-info">
+        <div class="info-item">
+          <i class="fas fa-ticket-alt"></i>
+          <div>
+            <span class="label">SELECTED</span>
+            <span class="value">Dune: Part Two</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <i class="far fa-calendar-alt"></i>
+          <div>
+            <span class="label">TODAY</span>
+            <span class="value">7:30 PM</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-chair"></i>
+          <div>
+            <span class="label">SEATS</span>
+            <span class="value">F12, F13</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn-primary">
+        <i class="fas fa-arrow-right"></i> Proceed to pay
+      </button>
+    </div>
+
+    <!-- footnote with extra attractions -->
+    <div class="footnote">
+      <span><i class="fas fa-check-circle"></i> instant confirmation</span>
+      <span><i class="fas fa-couch"></i> premium recliners available</span>
+      <span><i class="fas fa-tag"></i> up to 20% off on group bookings</span>
+    </div>
+  </div>
+</body>
+</html>
